@@ -41,6 +41,19 @@
     </ul>
   </div>
 
+
+  <div id="swift-containers" class="block">
+    <h3>Swift Containers</h3>
+    <ul>
+        {% for container in swift_containers %}
+        <li>
+            {{ container.container_name }}
+        </li>
+        {% endfor %}
+    </ul>
+
+  </div>
+
   {% else %}
     <div id="home_login" class="block">
       <h3>Sign In</h3>
