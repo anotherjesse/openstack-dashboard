@@ -10,3 +10,5 @@ class ContainerAlreadyExistsError(StandardError):
     """
     pass
 
+def wrap_swift_error(func):
+    pass

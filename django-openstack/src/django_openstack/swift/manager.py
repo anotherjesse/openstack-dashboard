@@ -7,12 +7,11 @@ connections
 """
 
 import cloudfiles
-import swift.settings as swift_settings # TODO: this aught to be moved somewhere else
-from swift.exceptions import ContainerAlreadyExistsError
-
+from django.conf import settings
+from exceptions import ContainerAlreadyExistsError
 
 class SwiftManager(object):
-    def __init__(self, account, username, password, authurl=swift_settings.AUTHURL):
+    def __init__(self, account, username, password, authurl=settings.SWIFT_AUTHURL):
         self.authuser = account + ':' + username
         self.password = password
         self.authurl = authurl
