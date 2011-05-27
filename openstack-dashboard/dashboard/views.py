@@ -32,15 +32,12 @@ from django_openstack.nova.exceptions import handle_nova_error
 @handle_nova_error
 def index(request):
     projects = None
-    swift_containers = None
     page_type = "home"
 
     if request.user.is_authenticated():
         projects = get_projects(user=request.user)
-        swift_containers = get_containers()
 
     return render_to_response('index.html', {
         'projects': projects,
-        'swift-containers' : swift_containers,
         'page_type': page_type,
     }, context_instance = template.RequestContext(request))
