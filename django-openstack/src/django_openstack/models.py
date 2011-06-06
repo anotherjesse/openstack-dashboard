@@ -30,10 +30,14 @@ from django.core import mail
 from django.db import models
 from django.db.models.signals import post_save
 from django.template.loader import render_to_string
+from django_openstack import log as logging
 from django_openstack.core.connection import get_nova_admin_connection
 
 
-SHA1_RE=re.compile('^[a-f0-9]{40}$')
+LOG = logging.getLogger('django_openstack')
+
+
+SHA1_RE = re.compile('^[a-f0-9]{40}$')
 
 
 class CredentialsAuthorization(models.Model):
@@ -65,10 +69,11 @@ class CredentialsAuthorization(models.Model):
     @staticmethod
     def create_auth_token(username):
         salt = sha.new(str(random.random())).hexdigest()[:5]
-        return sha.new(salt+username).hexdigest()
+        return sha.new(salt + username).hexdigest()
 
     def auth_token_expired(self):
-        expiration_date = datetime.timedelta(days=int(settings.CREDENTIAL_AUTHORIZATION_DAYS))
+        expiration_date = datetime.timedelta(
+                days=int(settings.CREDENTIAL_AUTHORIZATION_DAYS))
 
         return self.auth_date + expiration_date <= datetime.datetime.now()
 
@@ -100,6 +105,7 @@ def credentials_post_save(sender, instance, created, *args, **kwargs):
                                     body=body,
                                     to=[user.email])
         message.send(fail_silently=False)
+        LOG.info('Credentials sent to user "%s" at "%s"' % (instance.name, user.email))
 post_save.connect(credentials_post_save,
                   CredentialsAuthorization,
                   dispatch_uid='django_openstack.CredentialsAuthorization.post_save')
@@ -118,6 +124,7 @@ def user_post_save(sender, instance, created, *args, **kwargs):
         nova = get_nova_admin_connection()
         if not nova.has_user(instance.username):
             nova.create_user(instance.username)
+            LOG.info('User "%s" created in Nova' % instance.username)
 post_save.connect(user_post_save,
                   auth_models.User,
                   dispatch_uid='django_openstack.User.post_save')
