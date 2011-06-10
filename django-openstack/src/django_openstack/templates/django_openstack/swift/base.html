@@ -1,0 +1,40 @@
+{% extends "base-sidebar.html" %}
+{% load project_tags %}
+
+{% block headerjs %}
+{{ block.super }}
+{% endblock %}
+
+{% block nav_projects %}
+{% load_projects %}
+<li>
+  <h3 class="active"><a href="/">Projects</a></h3>
+  <div id="projects">
+    {% for p in projects %}
+    <div id="{{ p.projectname }}" class="project{% if p.projectname == project.projectname %} active{% endif %}">
+      <h4>
+        <a class="project_link" href="/project/{{ p.projectname }}">{{ p.projectname }}</a>
+      </h4>
+      {% if project.projectname == p.projectname %}
+      <ul>
+        <li {% if p.projectname == project.projectname and sidebar_selected == "instances" %}class="active"{% endif %}>
+          <a href="{% url swift_containers p.projectname %}">Containers</a>
+        </li>
+      </ul>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+</li>
+{% endblock %}
+
+{% block footerjs %}
+{{ block.super }}
+<script type="text/javascript">
+$(function() {
+  $('#sel_region').change(function() {
+    $('#frm_region').submit();
+  });
+});
+</script>
+{% endblock %}

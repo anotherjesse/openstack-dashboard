@@ -24,6 +24,9 @@ from django.conf.urls.defaults import *
 
 
 urlpatterns = patterns('',
+    url(r'^$',
+        'django_openstack.nova.views.projects.index',
+        name='project_index'),
     url(r'^(?P<project_id>[^/]+)/$',
         'django_openstack.nova.views.projects.detail',
         name='nova_project'),

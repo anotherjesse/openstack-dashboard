@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load django_openstack_tags %}
+
+{% block headercss %}
+{% endblock %}
+{% block pageclass %}home{% endblock %}
+
+{% block title %} - Cloud Computing{% endblock %}
+
+{% block content %}
+<div id="page_head">
+    <h2>Welcome to the Object Store Dashboard</h2>
+    <p>Through the Object Store Dashboard you can create containers and upload
+        objects the your cloud object store.
+    </p>
+</div>
+
+<div id="projects" class="block">
+    <h3>Your Projects</h3>
+    <ul>
+        {% for project in projects %}
+        <li class="{% cycle 'odd' 'even' %}">
+            <a id="lnk_project_{{ project.projectname }}" href="{% url swift_project project.projectname %}">
+                {{ project.projectname|capfirst }}
+                <span class="data">{{ project.description|capfirst }}</span>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+<div class="home_block">
+    <h3>OpenStack Object Store Resources</h3>
+    <ul>
+        <li><a href="http://openstack.org" target="_blank">OpenStack.org</a></li>
+        <li><a href="http://openstack.org/projects/storage/" target="_blank">OpenStack Object Store</a></li>
+        <li><a href="http://wiki.openstack.org/OpenStackDashboard" target="_blank">OpenStack Dashboard Wiki</a></li>
+        <li><a href="https://launchpad.net/openstack-dashboard" target="_blank">OpenStack Dashboard Launchpad Repository</a></li>
+    </ul>
+</div>
+{% endblock %}

@@ -149,14 +149,36 @@ p .ui-icon {
 	width: 435px;
 }
 
-#content.home #projects {
-	float: left;
-	width: 445px;
-	margin: 0 0 10px;
+#compute_panel {
+	margin-right: 16px;
 }
-#content.home #projects li {
-	border-bottom: 1px solid #bce3ff;
-	margin: 0;
+
+.home_panel {
+	height: 170px;
+	position: relative;
+}
+
+.home_panel p {
+	margin: 10px;
+	font-size: 1.2em;
+	font-weight: bold;
+}
+
+.home_panel div {
+	position: absolute;
+	bottom: 4px;
+	right: 0;
+	left: 0;
+}
+
+.home_panel div div {
+	width: 400px;
+	margin: 0 auto;
+}
+
+.home_panel div div input {
+	width: 390px;
+	font-size: 1.2em;
 }
 
 .block ul li.odd {

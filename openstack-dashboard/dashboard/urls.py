@@ -45,6 +45,10 @@ urlpatterns = patterns('',
 )
 
 urlpatterns += patterns('',
+    url(r'^swift/', include('django_openstack.swift.urls.project')),
+)
+
+urlpatterns += patterns('',
     # TODO(devcamcar): Move permission denied template into django-openstack.
     url(r'^denied/$',
         generic_views.TemplateView.as_view(template_name='permission_denied.html'),

@@ -18,27 +18,20 @@
   </div>
 
   {% if request.user.is_authenticated %}
-  <div id="projects" class="block">
-    <h3>Your Projects</h3>
-    <ul>
-      {% for project in projects %}
-      <li class="project {% cycle 'odd' 'even' %}">
-        <a id="lnk_project_{{ project.projectname }}" href="{% url nova_project project.projectname %}">
-          {{ project.projectname|capfirst }}
-          <span class="data">{{ project.description|capfirst }}</span>
-        </a>
-      </li>
-      {% endfor %}
-    </ul>
+  <div id="compute_panel" class="block home_panel">
+    <h3>Compute</h3>
+    <p>Use the Compute Dashboard to manage OpenStack Compute resources. Launch
+    instances from machine images, create keypairs, manage volumes, etc.</p>
+    <div><div><input type="button" value="Launch Compute Dashboard"
+      onclick="document.location='{% url project_index %}';" /></div></div>
   </div>
 
-  <div class="home_block">
-    <h3>OpenStack Resources</h3>
-    <ul>
-      <li><a href="http://openstack.org" target="_blank">OpenStack.org</a></li>
-      <li><a href="http://wiki.openstack.org/OpenStackDashboard" target="_blank">OpenStack Dashboard Wiki</a></li>
-      <li><a href="https://launchpad.net/openstack-dashboard" target="_blank">OpenStack Dashboard Launchpad Repository</a></li>
-    </ul>
+  <div id="object_store_panel" class="block home_panel">
+    <h3>Object Store</h3>
+    <p>Create containers and upload objects to the OpenStack Object
+    Store through the Object Store Dashboard.</p>
+    <div><div><input type="button" value="Launch Object Store Dashboard" 
+      onclick="document.location='{% url swift_index %}';" /></div></div>
   </div>
 
   {% else %}

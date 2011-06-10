@@ -23,21 +23,12 @@ Views for home page.
 from django import template
 from django.shortcuts import render_to_response
 from django.views.decorators.vary import vary_on_cookie
-from django_openstack.nova.shortcuts import get_projects
-from django_openstack.swift.shortcuts import get_containers
-from django_openstack.nova.exceptions import handle_nova_error
 
 
 @vary_on_cookie
-@handle_nova_error
 def index(request):
-    projects = None
     page_type = "home"
 
-    if request.user.is_authenticated():
-        projects = get_projects(user=request.user)
-
     return render_to_response('index.html', {
-        'projects': projects,
         'page_type': page_type,
     }, context_instance=template.RequestContext(request))

@@ -29,10 +29,22 @@ from django_openstack.core.connection import get_nova_admin_connection
 from django_openstack import log as logging
 from django_openstack.nova import forms as nova_forms
 from django_openstack.nova.exceptions import handle_nova_error
+from django_openstack.nova.shortcuts import get_projects
 from django_openstack.nova.shortcuts import get_project_or_404
 
 
 LOG = logging.getLogger('django_openstack.nova')
+
+
+@login_required
+@handle_nova_error
+def index(request):
+    projects = get_projects(user=request.user)
+
+    return render_to_response(
+        'django_openstack/nova/index.html',
+        {'projects': projects},
+        context_instance=template.RequestContext(request))
 
 
 @login_required
