@@ -24,5 +24,8 @@ def index(request):
 
 @login_required
 def detail(request, project_id):
+    project = shortcuts.get_project_or_404(request, project_id)
+    
     return render_to_response('django_openstack/swift/projects/index.html', {
+        'project': project
     }, context_instance=template.RequestContext(request))

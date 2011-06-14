@@ -813,3 +813,17 @@ div.image_detail, div.instance_detail {
 form.edit_instance input[type="submit"], form.edit_image input[type="submit"] {
   margin-right: 4px;
 }
+
+.container td {
+    text-align: left;
+}
+
+.container_breadcrumb {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.container_breadcrumb span {
+    font-weight: normal;
+}

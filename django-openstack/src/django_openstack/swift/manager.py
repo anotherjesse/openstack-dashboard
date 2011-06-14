@@ -11,10 +11,10 @@ from django.conf import settings
 from exceptions import ContainerAlreadyExistsError
 
 class SwiftManager(object):
-    def __init__(self, account, username, password, authurl=None):
-        self.authuser = account + ':' + username
-        self.password = password
-        self.authurl = authurl or settings.SWIFT_AUTHURL
+    def __init__(self):
+        self.authuser = settings.SWIFT_ACCOUNT + ':' + settings.SWIFT_USER
+        self.password = settings.SWIFT_PASS
+        self.authurl = settings.SWIFT_AUTHURL
         
     def get_swift_connection(self):
         return cloudfiles.get_connection(self.authuser, self.password,

@@ -1,0 +1,73 @@
+{% extends "django_openstack/swift/containers/base.html" %}
+{% load i18n %}
+
+{% block title %} - {{ project.projectname|capfirst }} Container: {{ container_name }} Objects{% endblock %}
+
+{% block content %}
+  <div id="page_head">
+    <h2 id="page_heading">{% trans "Objects" %}</h2>
+    <p id="page_description">{% trans "An object is the basic storage entity and any optional metadata that represents the files you store in the OpenStack Object Storage system." %}</p>
+  </div>
+  
+  <div class="container_breadcrumb">
+    Container: <span>{{ container_name }}</span>
+  </div>
+  
+  <div id="objects">
+  {% include "django_openstack/swift/objects/_list.html" %}
+  </div>
+  
+  <div class="dash_block first">
+    <form id="frm_object_upload" enctype="multipart/form-data" action="{% url swift_object_upload project.projectname container_name %}" method="post">
+      {% csrf_token %}
+      <fieldset>
+        <h3>Upload Object</h3>
+        {% for field in upload_form %}
+          {{ field.label_tag }}
+          {% if field.errors %}{{ field.errors }}{% endif %}
+          {{ field }}
+        {% endfor %}
+        <input id="object_upload" class="create" type="submit" value="Create" />
+      </fieldset>
+    </form>
+  </div>
+  
+  <div id="dlg_confirm" title="Confirm Delete Object">
+    <p>
+      Are you sure you wish to delete the object <span id="spn_delete_object_name"></span>?
+    </p>
+  </div>
+{% endblock %}
+
+{% block footerjs %}
+{{ block.super }}
+<script type="text/javascript">
+  var _object_name = "";
+  $(function() {
+    $('.form-object-delete').submit(function() {
+      _object_name = $(this).children(':first').val();
+      $('#spn_delete_object_name').text(_object_name);
+      $('#dlg_confirm').dialog('open');
+      return false;
+    });
+
+    $('#dlg_confirm').dialog({
+      buttons: {
+       'Ok': onConfirmOK,
+       'Cancel': function() { $(this).dialog('close'); }
+      },
+        autoOpen: false,
+        resizable: false,
+        width: 500,
+        height: 200
+      });
+
+  });
+
+  function onConfirmOK() {
+    $(this).dialog('close');
+    form = document.getElementById('form_object_delete_' + _object_name);
+    if(form) form.submit();
+  }
+</script>
+{% endblock %}

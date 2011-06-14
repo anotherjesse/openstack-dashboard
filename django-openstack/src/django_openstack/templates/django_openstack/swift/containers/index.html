@@ -1,0 +1,69 @@
+{% extends "django_openstack/swift/containers/base.html" %}
+{% load i18n %}
+
+{% block title %} - {{ project.projectname|capfirst }} Containers{% endblock %}
+
+{% block content %}
+  <div id="page_head">
+    <h2 id="page_heading">{% trans "Containers" %}</h2>
+    <p id="page_description">{% trans "Containers store objects in the object store. They are similar to a directory or folder in a traditional file system." %}</p>
+  </div>
+
+  <div id="containers">
+  {% include "django_openstack/swift/containers/_list.html" %}
+  </div>
+  
+  <div class="dash_block first">
+    <form id="frm_container_create" action="{% url swift_container_create project.projectname %}" method="post">
+      {% csrf_token %}
+      <fieldset>
+        <h3>Create New Container</h3>
+        {% include "django_openstack/swift/containers/_create_form.html" %}
+        <input id="container_create" class="create" type="submit" value="Create" />
+      </fieldset>
+    </form>
+  </div>
+  
+  {% include "django_openstack/_messages.html" %}
+  
+  <div id="dlg_confirm" title="Confirm Delete Container">
+    <p>
+      Are you sure you wish to delete the container <span id="spn_delete_container_name"></span>?
+      <br /><br />
+      NOTE: You can not delete a container unless is is empty (contains no objects).
+    </p>
+  </div>
+{% endblock %}
+
+{% block footerjs %}
+{{ block.super }}
+<script type="text/javascript">
+  var _container_name = "";
+  $(function() {
+    $('.form-container-delete').submit(function() {
+      _container_name = $(this).children(':first').val();
+      $('#spn_delete_container_name').text(_container_name);
+      $('#dlg_confirm').dialog('open');
+      return false;
+    });
+
+    $('#dlg_confirm').dialog({
+      buttons: {
+       'Ok': onConfirmOK,
+       'Cancel': function() { $(this).dialog('close'); }
+      },
+        autoOpen: false,
+        resizable: false,
+        width: 500,
+        height: 200
+      });
+
+  });
+
+  function onConfirmOK() {
+    $(this).dialog('close');
+    form = document.getElementById('form_container_delete_' + _container_name);
+    if(form) form.submit();
+  }
+</script>
+{% endblock %}

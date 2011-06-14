@@ -7,9 +7,9 @@ from django_openstack.swift.manager import SwiftManager
 
 def get_project_or_404(request, project_id):
     """
-    Returns a project or 404s if it doesn't exist.
+    Again, this needs to be replaced with Keystone code.
     """
-    return get_projects()[0]
+    return get_projects("poo")[0]
 
 def get_projects(user):
     """
@@ -25,11 +25,7 @@ def get_projects(user):
 
 def get_containers():
     """
-        Returns a list of containers associated with this user
-        TODO: make this not hard coded for test account
-       """
-    #import pdb;pdb.set_trace()
-
-    swift = SwiftManager('test', 'tester', 'testing')
+    Returns a list of containers.
+    """
+    swift = SwiftManager()
     return swift.get_container_names()
-

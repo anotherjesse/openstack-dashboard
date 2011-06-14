@@ -1,7 +1,7 @@
  # vim: tabstop=4 shiftwidth=4 softtabstop=4
 
 """
-Template tags for Swift.
+Template tags for Swift projects.
 """
 
 from django import template

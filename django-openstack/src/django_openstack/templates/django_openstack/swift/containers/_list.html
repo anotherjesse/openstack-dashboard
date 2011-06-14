@@ -1,0 +1,32 @@
+{% load i18n %}
+{% if containers %}
+<table style="width: 100%">
+  <tr>
+    <th>Container Name</th>
+    <th>&nbsp;</th>
+  </tr>
+  {% for container in containers %}
+  <tr class="{% cycle 'odd' 'even' %} container">
+    <td style="text-align: left;">
+      <a href="{% url swift_objects project.projectname container.name %}">{{ container.name }}</a>
+    </td>
+    <td style="width: 100px;">
+      <form id="form_container_delete_{{container.name}}" class="form-container-delete" method="post" action="{% url swift_container_delete project.projectname %}">
+        <input name="container_name" type="hidden" value="{{ container.name }}" />
+        <input id="container_delete_{{container.name}}" class="delete" type="submit" value="Delete" />
+        {% csrf_token %}
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<div class="ui-widget">
+  <div class="ui-state-highlight ui-corner-all">
+    <p>
+      <span class="ui-icon ui-icon-info"></span>
+      {% trans "No containers currently exist." %}
+    </p>
+  </div>
+</div>
+{% endif %}

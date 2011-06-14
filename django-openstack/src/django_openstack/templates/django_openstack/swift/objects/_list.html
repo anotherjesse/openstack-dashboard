@@ -1,0 +1,33 @@
+{% load i18n %}
+{% if objects %}
+  <table style="width: 100%">
+    <tr>
+      <th>Object Name</th>
+      <th>&nbsp;</th>
+    </tr>
+    {% for object in objects %}
+    <tr class="{% cycle 'odd' 'even' %}">
+      <td style="text-align: left;">
+        {{ object.name }}
+      </td>
+      <td style="width: 146px;">
+        <input type="button" value="Download" onclick="document.location='{% url swift_download_object project.projectname container_name object.name %}';"/>
+        <div style="float: right;"><form id="form_object_delete_{{object.name}}" class="form-object-delete" method="post" action="{% url swift_object_delete project.projectname container_name %}">
+          <input name="object_name" type="hidden" value="{{ object.name }}" />
+          <input id="object_delete_{{object.name}}" class="delete" type="submit" value="Delete" />
+          {% csrf_token %}
+        </form></div>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+{% else %}
+  <div class="ui-widget">
+    <div class="ui-state-highlight ui-corner-all">
+      <p>
+        <span class="ui-icon ui-icon-info"></span>
+        {% trans "No objects currently exist." %}
+      </p>
+    </div>
+  </div>
+{% endif %}

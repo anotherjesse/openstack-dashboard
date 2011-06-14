@@ -1,5 +1,5 @@
 {% extends "base-sidebar.html" %}
-{% load project_tags %}
+{% load swift_project_tags %}
 
 {% block headerjs %}
 {{ block.super }}
@@ -8,16 +8,16 @@
 {% block nav_projects %}
 {% load_projects %}
 <li>
-  <h3 class="active"><a href="/">Projects</a></h3>
+  <h3 class="active"><a href="{% url swift_index %}">Projects</a></h3>
   <div id="projects">
     {% for p in projects %}
     <div id="{{ p.projectname }}" class="project{% if p.projectname == project.projectname %} active{% endif %}">
       <h4>
-        <a class="project_link" href="/project/{{ p.projectname }}">{{ p.projectname }}</a>
+        <a class="project_link" href="/swift/{{ p.projectname }}">{{ p.projectname }}</a>
       </h4>
       {% if project.projectname == p.projectname %}
       <ul>
-        <li {% if p.projectname == project.projectname and sidebar_selected == "instances" %}class="active"{% endif %}>
+        <li {% if p.projectname == project.projectname and sidebar_selected == "containers" %}class="active"{% endif %}>
           <a href="{% url swift_containers p.projectname %}">Containers</a>
         </li>
       </ul>
