@@ -8,6 +8,8 @@
     <h2 id="page_heading">{% trans "Containers" %}</h2>
     <p id="page_description">{% trans "Containers store objects in the object store. They are similar to a directory or folder in a traditional file system." %}</p>
   </div>
+  
+  {% include "django_openstack/_messages.html" %}
 
   <div id="containers">
   {% include "django_openstack/swift/containers/_list.html" %}
@@ -23,8 +25,6 @@
       </fieldset>
     </form>
   </div>
-  
-  {% include "django_openstack/_messages.html" %}
   
   <div id="dlg_confirm" title="Confirm Delete Container">
     <p>

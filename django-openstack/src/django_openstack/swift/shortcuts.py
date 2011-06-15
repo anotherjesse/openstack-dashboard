@@ -9,7 +9,7 @@ def get_project_or_404(request, project_id):
     """
     Again, this needs to be replaced with Keystone code.
     """
-    return get_projects("poo")[0]
+    return get_projects("notneeded")[0]
 
 def get_projects(user):
     """

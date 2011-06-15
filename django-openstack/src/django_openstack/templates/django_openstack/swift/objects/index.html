@@ -9,6 +9,8 @@
     <p id="page_description">{% trans "An object is the basic storage entity and any optional metadata that represents the files you store in the OpenStack Object Storage system." %}</p>
   </div>
   
+  {% include "django_openstack/_messages.html" %}
+  
   <div class="container_breadcrumb">
     Container: <span>{{ container_name }}</span>
   </div>
@@ -27,7 +29,7 @@
           {% if field.errors %}{{ field.errors }}{% endif %}
           {{ field }}
         {% endfor %}
-        <input id="object_upload" class="create" type="submit" value="Create" />
+        <input id="object_upload" class="create" type="submit" value="Upload" />
       </fieldset>
     </form>
   </div>
@@ -61,7 +63,6 @@
         width: 500,
         height: 200
       });
-
   });
 
   function onConfirmOK() {
