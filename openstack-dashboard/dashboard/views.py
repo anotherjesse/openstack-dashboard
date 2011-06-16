@@ -21,14 +21,20 @@ Views for home page.
 """
 
 from django import template
-from django.shortcuts import render_to_response
+from django.shortcuts import redirect, render_to_response
 from django.views.decorators.vary import vary_on_cookie
+from django.conf import settings
 
 
 @vary_on_cookie
 def index(request):
     page_type = "home"
 
-    return render_to_response('index.html', {
-        'page_type': page_type,
-    }, context_instance=template.RequestContext(request))
+    # This is somewhat hacky. If Swift is configured
+    # go to index, otherwise go straight to Compute.
+    if 'django_openstack.swift' in settings.INSTALLED_APPS:
+        return render_to_response('index.html', {
+            'page_type': page_type,
+        }, context_instance=template.RequestContext(request))
+    else:
+        return redirect("project_index")

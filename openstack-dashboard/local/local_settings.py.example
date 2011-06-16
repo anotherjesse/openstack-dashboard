@@ -28,11 +28,12 @@ NOVA_SECRET_KEY = 'admin'
 NOVA_ADMIN_USER = 'admin'
 NOVA_PROJECT = 'admin'
 
-# Configure these for your outgoing email host
-# EMAIL_HOST = 'smtp.my-company.com'
-# EMAIL_PORT = 25
-## EMAIL_HOST_USER = 'djangomail'
-## EMAIL_HOST_PASSWORD = 'top-secret!'
+# Uncomment the following lines and add django_openstack.swift
+# to INSTALLED_APPS to enable Object Store support.
+# SWIFT_AUTHURL = 'http://localhost:8080/auth/v1.0'
+# SWIFT_ACCOUNT = 'test'
+# SWIFT_USER = 'tester'
+# SWIFT_PASS = 'testing'
 
 # Uncomment the following segment to silence most logging
 # django.db and boto DEBUG logging is extremely verbose.
